@@ -8,8 +8,15 @@ export function Home() {
 				<h1>TODO LIST</h1>
 				<br />
 
-				<div className="todoList">
-					<input className="todoInput" placeholder="Add Task" />
+				<div className="input-group mb-3">
+					<input
+						type="text"
+						className="form-control"
+						placeholder="Recipient's username"
+					/>
+					<span className="input-group-text" id="basic-addon2">
+						Add Item
+					</span>
 				</div>
 			</div>
 		</div>
