@@ -12,7 +12,9 @@ export function Home() {
 					<input
 						type="text"
 						className="form-control"
-						placeholder="Recipient's username"
+						placeholder="Add a new task to the list"
+						aria-label="Recipient's username"
+						aria-describedby="basic-addon2"
 					/>
 					<span className="input-group-text" id="basic-addon2">
 						Add Item
