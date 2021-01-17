@@ -32,9 +32,9 @@ export function Home() {
 			<h1>To-Do List</h1>
 			<br />
 
-			<div className="container todoList">
+			<div className="container form-group todoList">
 				<input
-					className="todoInput"
+					className="taskInput"
 					onChange={event => setUserInput(event.target.value)}
 					value={userInput}
 					onKeyUp={handleKeyUp}
@@ -44,7 +44,7 @@ export function Home() {
 				/>
 				<br />
 				<div className="mt-3">
-					<ul className="list-group list-group-flush">
+					<ul className="taskGroup container-fluid">
 						{theList.map((value, index) => {
 							return (
 								<li className="list-group-item" key={index}>
@@ -52,7 +52,7 @@ export function Home() {
 									<button
 										type="button"
 										onClick={() => itemDelete(index)}
-										className="btn btn-primary">
+										className="close">
 										X
 									</button>
 								</li>
