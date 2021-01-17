@@ -32,12 +32,15 @@ export function Home() {
 			<h1>To-Do List</h1>
 			<br />
 
-			<div className="todoList">
+			<div className="container todoList">
 				<input
 					className="todoInput"
 					onChange={event => setUserInput(event.target.value)}
 					value={userInput}
 					onKeyUp={handleKeyUp}
+					placeholder="Add a new task"
+					aria-label="Task on the list"
+					aria-describedby="basic-addon2"
 				/>
 				<br />
 				<div className="mt-3">
