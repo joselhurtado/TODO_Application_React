@@ -1,31 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //TODOlist Function
 export function Home() {
-	const [theList, getList] = useState([
-		"Learn Javascript",
-		"Schedule Mentorships",
-		"Practice React"
-	]);
+	const [theList, setList] = useState([]);
 	const [userInput, setUserInput] = useState([""]); // First empty userInput
+
+	useEffect(() => {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/jlhh00")
+			.then(function(response) {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json(); // Read the response as json.
+			})
+			.then(function(responseAsJson) {
+				// Do stuff with the JSON
+				setList(responseAsJson);
+			})
+			.catch(function(error) {
+				console.log("Looks like there was a problem: \n", error);
+			});
+	}, []); //React Hook for Fetch API
 
 	const handleKeyUp = event => {
 		if (event.keyCode == 13 && userInput != "") {
-			getList(theList.concat(userInput));
+			setList(theList.concat(userInput));
+
+			fetch("https://assets.breatheco.de/apis/fake/todos/user/jlhh00", {
+				method: "PUT",
+				body: JSON.stringify(theList.concat(userInput)),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw Error(response.statusText);
+					}
+					return response.json(); // Read the response as json.
+				})
+				.then(response => {
+					console.log("Success:", response);
+					fetch(
+						"https://assets.breatheco.de/apis/fake/todos/user/jlhh00"
+					);
+				})
+				.catch(error => console.error("Error:", error));
+
 			setUserInput("");
 		}
 	};
 	// handleKeyUp from onKeyUp on input text with event passed as default
 	// check if event keycode is 13 (enter) and input is not blank to continue
-	// use state getList to add concat version of userInput into theList
+	// use state setList to add concat version of userInput into theList
 
 	const itemDelete = index => {
 		var updatedList = theList.filter(
 			(task, taskIndex) => index != taskIndex
 		);
-		getList(updatedList);
+		setList(updatedList);
 	};
-	// create new variable with updated list > filter to check if index matches original index from list. then use getList to update to new list.
+	// create new variable with updated list > filter to check if index matches original index from list. then use setList to update to new list.
 
 	return (
 		<div className="container form text-center mt-5">
@@ -48,7 +83,7 @@ export function Home() {
 						{theList.map((value, index) => {
 							return (
 								<li className="list-group-item" key={index}>
-									{value}
+									{value.label}
 									<button
 										type="button"
 										onClick={() => itemDelete(index)}
