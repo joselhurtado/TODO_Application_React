@@ -24,11 +24,13 @@ export function Home() {
 
 	const handleKeyUp = event => {
 		if (event.keyCode == 13 && userInput != "") {
-			setList(theList.concat(userInput));
+			setList(theList.concat({ label: userInput, done: false }));
 
 			fetch("https://assets.breatheco.de/apis/fake/todos/user/jlhh00", {
 				method: "PUT",
-				body: JSON.stringify(theList.concat(userInput)),
+				body: JSON.stringify(
+					theList.concat({ label: userInput, done: false })
+				),
 				headers: {
 					"Content-Type": "application/json"
 				}
