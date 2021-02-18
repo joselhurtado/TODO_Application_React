@@ -61,6 +61,27 @@ export function Home() {
 			(task, taskIndex) => index != taskIndex
 		);
 		setList(updatedList);
+
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/jlhh00", {
+			method: "PUT",
+			body: JSON.stringify(updatedList),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			})
+			.then(response => {
+				console.log("Success:", response);
+				fetch(
+					"https://assets.breatheco.de/apis/fake/todos/user/jlhh00"
+				);
+			})
+			.catch(error => console.error("Error:", error));
 	};
 	// create new variable with updated list > filter to check if index matches original index from list. then use setList to update to new list.
 
